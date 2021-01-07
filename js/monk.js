@@ -6,8 +6,12 @@ class Monk extends Character{
       this.mana = 200;
     }
     heal(){
+      if(this.mana < 25){
+        return false;
+      }
       this.mana -= 25;
       this.hp += 8;
+      return true;
     }
     newTurn(players){
       this.menu(players);
@@ -15,7 +19,7 @@ class Monk extends Character{
     menu(players, warn = ""){
       if(warn != ""){
         console.log();
-        console.log(warn);
+        p.warn(warn);
         console.log();
       }
       let choice = this.attack("heal");
@@ -26,7 +30,9 @@ class Monk extends Character{
         if(choice == 1){
           this.dealDamage(p);
         }else{
-          this.heal();
+          if(!this.heal()){
+            this.menu(players, "Vous n'avez pas assez de mana.");
+          }
         }
       }
     }

@@ -13,9 +13,13 @@ class Fighter extends Character{
       }
     }
     darkVision(target){
+      if(this.mana < 20){
+        return false;
+      }
       this.dealDamage(target, 5);
       this.mana -= 20;
       this.dealVisionTurn = 2;
+      return true;
     }
     newTurn(players){
       this.dealVisionTurn--;
@@ -24,7 +28,7 @@ class Fighter extends Character{
     menu(players, warn = ""){
       if(warn != ""){
         console.log();
-        console.log(warn);
+        p.warn(warn);
         console.log();
       }
       let choice = this.attack("Dark Vision");
@@ -35,7 +39,9 @@ class Fighter extends Character{
         if(choice == 1){
           this.dealDamage(p);
         }else{
-          this.darkVision(p);
+          if(!this.darkVision(p)){
+            this.menu(players, "Vous n'avez pas assez de mana.");
+          }
         }
       }
     }

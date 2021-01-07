@@ -12,6 +12,7 @@ class Game{
     }
     async play(){
       let human = this.chooseHumanClass();
+      alert(human.constructor.name);
       let players = [new Fighter(), new Paladin(), new Berzeker(), new Monk(), new Assassin];
       players = this.removeDuplicate(players, human)
       let turn = new Turn(this.turnLeft, players);
@@ -48,6 +49,7 @@ class Game{
     removeDuplicate(players, human){
       players = players.filter(player => player.constructor.name != human.constructor.name);
       players.push(human);
+      console.log(players);
       return players
     }
     sleep(ms) { 

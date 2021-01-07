@@ -6,9 +6,13 @@ class Paladin extends Character{
       this.mana = 160;
     }
     healingLighting(victim){
+      if(this.mana < 40){
+        return false;
+      }
       this.mana -= 40;
       this.hp += 5;
-      this.dealDamage(victim, 4) 
+      this.dealDamage(victim, 4) ;
+      return true;
     }
     newTurn(players){
       this.menu(players);
@@ -17,7 +21,7 @@ class Paladin extends Character{
     menu(players, warn = ""){
       if(warn != ""){
         console.log();
-        console.log(warn);
+        p.warn(warn);
         console.log();
       }
       let choice = this.attack("Heal Lighting");
@@ -28,7 +32,9 @@ class Paladin extends Character{
         if(choice == 1){
           this.dealDamage(p);
         }else{
-          this.healingLighting(p);
+          if(!this.healingLighting(p)){
+            this.menu(players, "vous n'avez pas assez de mana.");
+          }
         }
       }
     }
